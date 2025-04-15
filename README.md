@@ -9,6 +9,8 @@ Kinds of caching :
 
 Next.js stores data requests with the same configuration, This avoids unnecessary duplicate data requests to a data source for a single request that's handled by the Next.js server.
 
+Mechanism in Next.js to avoid duplicate requests to the same data source with same request configuration, by configuration means different header in this case.
+
 ## Data cache:
 
 Data cache is about storing and reusing data that has been fetched from a data source if it hasn't changed.
