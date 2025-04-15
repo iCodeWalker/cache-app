@@ -1,8 +1,29 @@
 import Messages from "@/components/messages";
 
+import { unstable_noStore } from "next/cache";
+
+// ############# We can setup the configuration for Data caching for the whole file ################
+// export const revalidate = 5;
+// serves the same purpose as revalidate setting on the fetch function.
+// must be named revalidate as next.js will look for this named variable.
+// Now we don't have to pass revalidate in the fetch function
+
+// export const dynamic = "force-dynamic"; // Always re-fetch all data needed in the file. No data is cached
+// "force-static" To force caching, will never fetch any data
+
 export default async function MessagesPage() {
+  // unstable_noStore(); same as "force-dynamic"
   const response = await fetch(
-    "http://localhost:8080/messages"
+    "http://localhost:8080/messages",
+    // ######## Data cache ##########
+    {
+      // cache: "force-cache", // default with next.js 14, most aggresive caching
+      // cache: "no-store", // default with next.js 15, has multiple req hitting the backend
+      // cache: "no-store",
+      next: {
+        revalidate: 5, // number of seconds next.js will reuse the cache data, untill it will revalidate, and throw away the cache.
+      },
+    }
     // ######### Request memoization ##########
     // If we removed the header that is different in both the cases than we only get single response form the next.js server
     // {

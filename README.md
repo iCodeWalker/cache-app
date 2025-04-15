@@ -17,6 +17,14 @@ Data cache is about storing and reusing data that has been fetched from a data s
 This avoids unnecessary requests to the data source and speeds up the application.
 The cache persists until it is revalidated (manually or after a set time).
 
+When fetching data from the backend what next.js does is it will store the response data fetched from there in some internally managed server-side cache, and it will keep using that data forever untill we tell next.js to not do that anymore.
+
+We can tell data to not use the cached data anymore by calling revalidatePath() function.
+
+Alternatively we can also configure the fetch function, and on this configuration obj we can set various settings, i.e. "cache" setting, we can do this configuration on both browser side and server side.
+
+But on server side next.js is actually overriding the default built in function that is provided by the modern node.js and it does so that next.js can find out what cache setting we setup, as it changes the behaviour of next.js cache.
+
 ## Full route cache:
 
 Next.js stores the rendered HTML and React server components at build time.
