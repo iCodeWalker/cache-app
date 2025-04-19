@@ -20,12 +20,14 @@ export default async function MessagesPage() {
       // cache: "force-cache", // default with next.js 14, most aggresive caching
       // cache: "no-store", // default with next.js 15, has multiple req hitting the backend
       // cache: "no-store",
+
+      // #### next key configurration can only be used in Next.js ####
       next: {
         revalidate: 5, // number of seconds next.js will reuse the cache data, untill it will revalidate, and throw away the cache.
       },
     }
     // ######### Request memoization ##########
-    // If we removed the header that is different in both the cases than we only get single response form the next.js server
+    // If we removed the header that is different in both the cases than we only get single response from the next.js server
     // {
     //   headers: {
     //     'X-ID': 'page',

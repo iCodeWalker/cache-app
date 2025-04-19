@@ -2,7 +2,7 @@ export default async function MessagesLayout({ children }) {
   const response = await fetch(
     "http://localhost:8080/messages"
     // ######### Request memoization ##########
-    // If we removed the header that is different in both the cases than we only get single response form the next.js server
+    // If we removed the header that is different in both the cases than we only get single response from the next.js server
     // {
     //   headers: {
     //     'X-ID': 'layout',

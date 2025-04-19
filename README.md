@@ -9,7 +9,11 @@ Kinds of caching :
 
 Next.js stores data requests with the same configuration, This avoids unnecessary duplicate data requests to a data source for a single request that's handled by the Next.js server.
 
-Mechanism in Next.js to avoid duplicate requests to the same data source with same request configuration, by configuration means different header in this case.
+IMP : Mechanism in Next.js to avoid duplicate requests to the same data source with same request configuration, by configuration means different header in this case.
+
+We don't have to do any extra configurations to have Request Memoization.
+
+Next.js avoids unnecessary requests and instead just sends one request and reuses the response.
 
 ## Data cache:
 
@@ -37,3 +41,21 @@ Managed on the client side.
 Next.js stores some React server component payloads in the memory of browser it does that so that the navigation between the pages can happen faster.
 
 revalidated when new pages are rendered by the server or whenever we leavr the page or website and visit it again.
+
+## We can setup the configuration for Data caching for the whole file
+
+    export const revalidate = 5;
+
+1.  serves the same purpose as revalidate setting on the fetch function.
+2.  must be named revalidate as next.js will look for this named variable.
+3.  Now we don't have to pass revalidate in the fetch function.
+4.  same as next: { revalidate: 5 } in fetch request.
+
+    export const dynamic = "force-dynamic";
+
+5.  default value is auto
+6.  same as cache: "no-store"
+7.  "force-dynamic" : Always re-fetch all data needed in the file. No data is cached
+8.  "force-static" : To force caching, will never fetch any data
+9.  unstable_noStore(); same as "force-dynamic" recommends using this over = export const dynamic = "force-dynamic";
+10. If we have multiple components in the same page and want to cache data in some components but not in all componentst than we can use this function to disable caching for one specific component.

@@ -9,7 +9,7 @@ export default function NewMessagePage() {
     const message = formData.get("message");
     addMessage(message);
     // ########### Data cache ############
-    // revalidatePath();
+    // revalidatePath(); // To tell next.js to revalidate the path and look for the new data that might have changed
     redirect("/messages");
   }
 
