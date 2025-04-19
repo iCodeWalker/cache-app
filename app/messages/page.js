@@ -24,6 +24,9 @@ export default async function MessagesPage() {
       // #### next key configurration can only be used in Next.js ####
       next: {
         revalidate: 5, // number of seconds next.js will reuse the cache data, untill it will revalidate, and throw away the cache.
+
+        // ############## On demand cache ################
+        tags: ["msg"],
       },
     }
     // ######### Request memoization ##########

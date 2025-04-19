@@ -35,6 +35,17 @@ Next.js stores the rendered HTML and React server components at build time.
 This avoids unnecessary HTML render cycle and data fetches.
 The cache persists until the related data cache is revalidated.
 
+Full Route cache is created and initialized at the build time.
+Next.js pre-renders all the pages that it's able to pre-render (except pages with dynamic values and routes).
+
+export const dynamic = "force-dynamic";
+
+also helps in full route cache.
+
+We should revalidatePath() instead of this "dynamic" const.
+
+revalidatePath() only re validates some piece of the cache.
+
 ## Router cache:
 
 Managed on the client side.
@@ -59,3 +70,19 @@ revalidated when new pages are rendered by the server or whenever we leavr the p
 8.  "force-static" : To force caching, will never fetch any data
 9.  unstable_noStore(); same as "force-dynamic" recommends using this over = export const dynamic = "force-dynamic";
 10. If we have multiple components in the same page and want to cache data in some components but not in all componentst than we can use this function to disable caching for one specific component.
+
+## On demand caching
+
+1. revalidatePath() // nested path and routes will not have there cache deleted or revalidated, unless we pass 2nd arg , "layout". revalidatePath("/messages", "layout")
+
+if 2nd arg is 'page' than only that page will get revalidated.
+
+To clear cache of all the pages of the site revalidatePath("/", "layout")
+
+2. revalidateTag('msg')
+
+We can assign tags to requests that fetch data that will be cached.
+
+const response = await fetch("http://localhost:8080/messages",{ next: { tags : ['msg'] // These tags are connected to cached data},})
+
+can be used on multiple pages that uses same tags.
