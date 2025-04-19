@@ -1,4 +1,5 @@
 import Messages from "@/components/messages";
+import { getMessages } from "@/lib/messages";
 
 import { unstable_noStore } from "next/cache";
 
@@ -13,31 +14,35 @@ import { unstable_noStore } from "next/cache";
 
 export default async function MessagesPage() {
   // unstable_noStore(); same as "force-dynamic"
-  const response = await fetch(
-    "http://localhost:8080/messages",
-    // ######## Data cache ##########
-    {
-      // cache: "force-cache", // default with next.js 14, most aggresive caching
-      // cache: "no-store", // default with next.js 15, has multiple req hitting the backend
-      // cache: "no-store",
+  // const response = await fetch(
+  //   "http://localhost:8080/messages",
+  //   // ######## Data cache ##########
+  //   {
+  //     // cache: "force-cache", // default with next.js 14, most aggresive caching
+  //     // cache: "no-store", // default with next.js 15, has multiple req hitting the backend
+  //     // cache: "no-store",
 
-      // #### next key configurration can only be used in Next.js ####
-      next: {
-        revalidate: 5, // number of seconds next.js will reuse the cache data, untill it will revalidate, and throw away the cache.
+  //     // #### next key configurration can only be used in Next.js ####
+  //     next: {
+  //       revalidate: 5, // number of seconds next.js will reuse the cache data, untill it will revalidate, and throw away the cache.
 
-        // ############## On demand cache ################
-        tags: ["msg"],
-      },
-    }
-    // ######### Request memoization ##########
-    // If we removed the header that is different in both the cases than we only get single response from the next.js server
-    // {
-    //   headers: {
-    //     'X-ID': 'page',
-    //   },
-    // }
-  );
-  const messages = await response.json();
+  //       // ############## On demand cache ################
+  //       tags: ["msg"],
+  //     },
+  //   }
+  //   // ######### Request memoization ##########
+  //   // If we removed the header that is different in both the cases than we only get single response from the next.js server
+  //   // {
+  //   //   headers: {
+  //   //     'X-ID': 'page',
+  //   //   },
+  //   // }
+  // );
+
+  // const messages = await response.json();
+
+  // ########## Rquest Memoization : For Using custom Database  ##########
+  const messages = getMessages();
 
   if (!messages || messages.length === 0) {
     return <p>No messages found</p>;
